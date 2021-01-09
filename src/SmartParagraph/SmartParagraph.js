@@ -6,8 +6,23 @@ class SmartParagraph extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			text: 'I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system and expound the actual teachings of great explorers.'
+			text: 'I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system and expound the actual teachings of great explorers.',
+			isCut: false
 		};
+	}
+
+	cutText () {
+		let indexOfLetter = 99;
+		while (this.state.text[indexOfLetter] !== " ") {
+			indexOfLetter++;
+		}
+		return this.state.text.slice(0, indexOfLetter);
+	}
+
+	onToggle () {
+		this.setState({
+			isCut: !this.state.isCut
+		});
 	}
 
 	render() {
@@ -20,9 +35,9 @@ class SmartParagraph extends Component {
 					Clicking again should show all of the text back.
 				</p>
 				<p className="SmartParagraph__value">
-					{this.state.text}
+					{this.state.isCut ? this.cutText(this.state.text) : this.state.text}
 				</p>
-				<button>Toggle</button>
+				<button onClick={this.onToggle.bind(this)}>Toggle</button>
 			</div>
 		)
 	}

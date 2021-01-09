@@ -3,6 +3,29 @@ import './Timer.scss';
 
 class Timer extends Component {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			second: 0,
+			isPause: false
+		}
+	}
+	
+	onStart () {
+		this.interval = setInterval(() => {
+			this.setState({second: this.state.second+1}); 
+		}, 1000)
+	}
+
+	onReset () {
+		clearInterval(this.interval);
+		this.setState({second: 0});
+	}
+
+	onPause () {
+		clearInterval(this.interval);
+	}
+
 	render() {
 		return (
 			<div className="Timer">
@@ -13,11 +36,11 @@ class Timer extends Component {
 					<li><b>Reset:</b> should set the timer to 0</li>
 				</ul>
 				<div className="Timer__actions">
-					<button>Play</button>
-					<button>Pause</button>
-					<button>Reset</button>
+					<button onClick={this.onStart.bind(this)}>Play</button>
+					<button onClick={this.onPause.bind(this)}>Pause</button>
+					<button onClick={this.onReset.bind(this)}>reset</button>
 				</div>
-				<div className="Timer__value">0</div>
+				<div className="Timer__value">{this.state.second}</div>
 			</div>
 		)
 	}
